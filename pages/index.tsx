@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Clock from "../components/Clock";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/pages/Home.module.scss";
 import { NextPage, NextPageContext } from "next";
 import Cookie from "js-cookie";
 import parseCookies from "../utils/parseCookies";
 import { useEffect, useState } from "react";
+import Greeter from "../components/Greeter";
 
 interface PageProps {
   cookies: {
@@ -17,7 +18,7 @@ const Home: NextPage<PageProps> = ({ cookies }) => {
   useEffect(() => {
     if (!cookies.username) {
       const answer = prompt("suko kim jestes naj name pls");
-      Cookie.set("username", answer);
+      Cookie.set("username", answer, { expires: new Date("01/01/2030") });
       setUsername(answer);
     }
   }, []);
@@ -30,7 +31,7 @@ const Home: NextPage<PageProps> = ({ cookies }) => {
 
       <main className={styles.main}>
         <Clock force12hour={false} showSeconds={true} />
-        Siema: <b>{username}</b>
+        <Greeter username={username} />
       </main>
     </div>
   );
